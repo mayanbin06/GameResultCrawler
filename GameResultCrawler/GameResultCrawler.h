@@ -16,7 +16,7 @@ public:
       virtual void OnGameResult(const std::string& result) = 0;
   };
 
-  GameResultCrawler(const std::string&);
+  GameResultCrawler(const std::string&, Client*, int, int);
   virtual ~GameResultCrawler();
 
   void Start();
@@ -30,9 +30,12 @@ public:
 private:
   void GetResultOnce(const std::string&, std::string&);
 
+  int crawler_time_;
+  int sleep_time_;
   std::string url_;
   std::unique_ptr<std::thread> main_thread_;
   std::atomic<int> thread_state_;
+  Client* client_;
 };
 
 } // name space crawler

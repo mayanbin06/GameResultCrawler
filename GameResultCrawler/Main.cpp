@@ -2,6 +2,6 @@
 
 int main() {
     crawler::QQOnlineCrawler c;
-    c->Start();
+    c.Start();
     return 0;
 }

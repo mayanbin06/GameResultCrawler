@@ -6,7 +6,7 @@ cc = g++
 cc_lib = -lcurl -lJsonBox
 output_name = QQCrawler
 
-src = QQOnlineCrawler.cpp GameResultCrawler.cpp
+src = QQOnlineCrawler.cpp GameResultCrawler.cpp Main.cpp
 
 all: target
 

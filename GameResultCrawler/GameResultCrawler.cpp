@@ -7,19 +7,34 @@
 
 namespace crawler {
 
-GameResultCrawler::GameResultCrawler(const std::string& url)
-    : url_(url) {
+GameResultCrawler::GameResultCrawler(
+    const std::string& url, Client* client,
+    int crawler_time, int sleep_time)
+    : crawler_time_(crawler_time),
+      sleep_time_(sleep_time),
+      url_(url),
+      client_(client) {
 }
 
 GameResultCrawler::~GameResultCrawler() {
 }
 
 void GameResultCrawler::MainLoop(int n) {
+
+  std::string pre_result;
+  std::string result;
   while(thread_state_.load()) {
-    std::string result;
+    result.clear();
     GetResultOnce(url_, result);
-    std::cout << "Get Result = " << result << std::endl;
-    std::this_thread::sleep_for(std::chrono::seconds(3));
+    if (pre_result.compare(result) != 0) {
+      pre_result = result;
+      client_->OnGameResult(result);
+      if (pre_result != "") {
+        // not first, sleep for 45.
+        std::this_thread::sleep_for(std::chrono::seconds(sleep_time_));
+      }
+    }
+    std::this_thread::sleep_for(std::chrono::seconds(crawler_time_));
   }
 }
 
