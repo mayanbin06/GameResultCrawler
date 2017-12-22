@@ -88,18 +88,15 @@ void QQOnlineCrawler::OnGameResult(const std::string& result) {
   struct tm* timeinfo = localtime(&tt);
 
   ss << (timeinfo->tm_year + 1900);
-  if (timeinfo->tm_mon > 8)
-    ss << (timeinfo->tm_mon + 1);
-  else
-    ss << 0 << (timeinfo->tm_mon + 1);
-
-  if (timeinfo->tm_mday > 9)
-    ss << (timeinfo->tm_mday);
-  else
-    ss << 0 << (timeinfo->tm_mday);
-
-  int dayIssue = timeinfo->tm_hour * 60 + timeinfo->tm_min;
-  ss << dayIssue;
+  ss.fill('0');
+  ss.width(2);
+  ss << (timeinfo->tm_mon + 1);
+  ss.fill('0');
+  ss.width(2);
+  ss << timeinfo->tm_mday;
+  ss.fill('0');
+  ss.width(4);
+  ss << timeinfo->tm_hour * 60 + timeinfo->tm_min;
   ss >> issueStr;
 
   char format[100];
