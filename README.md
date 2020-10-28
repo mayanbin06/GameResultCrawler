@@ -1,1 +1,1 @@
-Tencent Online People Award Crawler.
+Tencent Online People Crawler.
